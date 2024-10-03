@@ -8,19 +8,33 @@ use std::{
 
 use anyhow::anyhow;
 
-use bevy::{
-    pbr::{ExtendedMaterial, MaterialExtension},
-    prelude::*,
-    render::{
-        render_asset::RenderAssetUsages,
-        render_resource::{Extent3d, TextureDimension, TextureFormat},
-        texture::{ImageSampler, ImageSamplerDescriptor},
-    },
-    tasks::{AsyncComputeTaskPool, Task},
-    utils::HashMap,
+use bevy_app::prelude::*;
+use bevy_asset::prelude::*;
+use bevy_derive::{Deref, DerefMut};
+use bevy_ecs::prelude::*;
+use bevy_hierarchy::prelude::*;
+use bevy_log::prelude::*;
+use bevy_pbr::{prelude::*, ExtendedMaterial, MaterialExtension};
+use bevy_render::prelude::*;
+use bevy_render::{
+    render_asset::RenderAssetUsages,
+    render_resource::{Extent3d, TextureDimension, TextureFormat},
+    texture::{ImageSampler, ImageSamplerDescriptor},
 };
+use bevy_tasks::{AsyncComputeTaskPool, Task};
+use bevy_time::prelude::*;
+use bevy_utils::{prelude::*, HashMap};
 use futures_lite::future;
 use image::{imageops::FilterType, DynamicImage, ImageBuffer};
+
+#[cfg(feature = "debug_text")]
+use bevy_color::prelude::*;
+
+#[cfg(feature = "debug_text")]
+use bevy_ui::prelude::*;
+
+#[cfg(feature = "debug_text")]
+use bevy_text::prelude::*;
 
 #[derive(Resource, Deref)]
 pub struct DefaultSampler(ImageSamplerDescriptor);
